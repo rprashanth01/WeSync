@@ -1,0 +1,52 @@
+{
+  "project_info": {
+    "project_number": "413210436387",
+    "project_id": "wesync-164907"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413210436387:android:8850434a54069b80",
+        "android_client_info": {
+          "package_name": "prashanth.wesync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413210436387-sqlv300j9f5u0f2a238o012lhhgpa7de.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "413210436387-acr2nkm3ooh7196l4absq1acf0i7idjf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "prashanth.wesync",
+            "certificate_hash": "fad6f1ffd4d59aacd409781be530e562ef2b2343"
+          }
+        },
+        {
+          "client_id": "413210436387-2t07thg9vac6qhhopgb8hdfuo9enoqsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbK5fNMYPVksfKMHV2Xy-nGIKPXn0BbSQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
