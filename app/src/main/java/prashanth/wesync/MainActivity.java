@@ -25,6 +25,7 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
@@ -44,6 +45,18 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    Log.d("AUTH","user logged in "+user.getEmail());
+                } else {
+                    Log.d("AUTH","user logged out");
+                }
+            }
+        };
         String serverClientId = getString(R.string.server_client_id);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -63,12 +76,18 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
 
     @Override
     protected void onStart() {
+
         super.onStart();
+        mAuth.addAuthStateListener(mAuthStateListener);
     }
 
     @Override
     protected void onStop() {
+
         super.onStop();
+        if(mAuthStateListener != null){
+            mAuth.removeAuthStateListener(mAuthStateListener);
+        }
     }
 
     @Override
@@ -116,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                 GoogleSignInAccount account = result.getSignInAccount();
                 Toast.makeText(this, "SUCCESS!!",
                         Toast.LENGTH_LONG).show();
-                //firebaseAuthWithGoogle(account);
+                firebaseAuthWithGoogle(account);
                 Log.d("AUTH","signInAUth VAlue :  "+account.getServerAuthCode());
                 new SignInAsyncTask().execute(new Pair<Context, String>(this,account.getServerAuthCode() ));
             } else {
