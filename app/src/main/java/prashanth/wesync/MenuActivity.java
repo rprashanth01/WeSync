@@ -35,12 +35,13 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     String userLatitude = "";
     String userLongitude = "";
-    String userId = "";
+    //String userId = "";
 
     private LocationRequest mLocationRequest;
 
     Context context;
     Location mLastLocation;
+    String userId = "abc@gmailcom1234";
 
     private DatabaseReference mDatabase;
 
@@ -61,19 +62,19 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
                     .build();
         }
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-        userId = mDatabase.push().getKey();
+        //userId = mDatabase.push().getKey();
 
 
         // creating user object
         ArrayList<String> interests = new ArrayList<>();
         interests.add("Movies");
         interests.add("Sports");
-        UserInfo user = new UserInfo("Asb","abc@gmail.com","12312312",12345,34567,interests);
-        mDatabase.child(userId).setValue(user);
-
+        UserInfo user = new UserInfo("Asb","abc@gmail.com","4804101987",12345,34567,interests);
+        //mDatabase.setValue(user);
+        mDatabase.child("users").child(userId).setValue(user);
 
     }
 
