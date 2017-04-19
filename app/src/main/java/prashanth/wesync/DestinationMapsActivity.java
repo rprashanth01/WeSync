@@ -20,11 +20,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
+
 
 public class DestinationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private static final int PERMISSION_REQUEST_LOCATION = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

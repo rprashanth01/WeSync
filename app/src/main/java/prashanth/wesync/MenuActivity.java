@@ -25,15 +25,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import prashanth.wesync.models.UserInfo;
+
+import static prashanth.wesync.AppConstants.PERMISSION_READ_CONTACTS;
+import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
+
 public class MenuActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleApiClient mGoogleApiClient;
     String userLatitude = "";
     String userLongitude = "";
     String userId = "";
-
-    private static final int PERMISSION_REQUEST_LOCATION = 1;
-    private static final int PERMISSION_READ_CONTACTS = 2;
 
     private LocationRequest mLocationRequest;
 
@@ -187,6 +189,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     public void findFriendsByDest(View v){
         Intent destIntent = new Intent(MenuActivity.this,DestinationMapsActivity.class);
         startActivity(destIntent);
+    }
+
+    public void getAllUsers(View v){
+        Intent userIntent = new Intent(MenuActivity.this,UsersListActivity.class);
+        startActivity(userIntent);
     }
 
     public void onLocationChanged(Location location) {

@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import prashanth.wesync.models.UserInfo;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private String name = "";

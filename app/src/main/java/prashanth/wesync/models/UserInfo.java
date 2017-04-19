@@ -1,4 +1,4 @@
-package prashanth.wesync;
+package prashanth.wesync.models;
 
 import java.util.ArrayList;
 

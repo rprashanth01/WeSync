@@ -45,7 +45,8 @@
 
         <activity
             android:name=".DestinationMapsActivity"
-            android:label="@string/title_activity_location_maps"></activity>
+            android:label="@string/title_activity_location_maps" />
+        <activity android:name=".UsersListActivity"></activity>
     </application>
 
 </manifest>
