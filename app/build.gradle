@@ -38,8 +38,10 @@ dependencies {
     compile 'com.google.apis:google-api-services-calendar:v3-rev243-1.22.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

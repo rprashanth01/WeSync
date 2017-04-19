@@ -184,6 +184,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    public void findFriendsByDest(View v){
+        Intent destIntent = new Intent(MenuActivity.this,DestinationMapsActivity.class);
+        startActivity(destIntent);
+    }
+
     public void onLocationChanged(Location location) {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
