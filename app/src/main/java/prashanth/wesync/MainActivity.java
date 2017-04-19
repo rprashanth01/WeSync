@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -138,8 +139,12 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                 firebaseAuthWithGoogle(account);
                 Log.d("AUTH","signInAUth VAlue :  "+account.getServerAuthCode());
                 new SignInAsyncTask().execute(new Pair<Context, String>(this,account.getServerAuthCode() ));
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intent);
             } else {
                 Log.d(TAG,"Google Login Failed");
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intent);
             }
         }
     }

@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="prashanth.wesync.MenuActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/buttonDest"
+        android:layout_width="323dp"
+        android:layout_height="74dp"
+        android:background="@android:color/holo_green_light"
+        android:text="Friends by Destination"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="203dp"
+        android:layout_below="@+id/buttonEditProfile"
+        android:layout_alignStart="@+id/buttonInterest"
+        android:layout_marginTop="46dp" />
+
+    <Button
+        android:id="@+id/buttonInterest"
+        android:layout_width="323dp"
+        android:layout_height="74dp"
+        android:background="@android:color/holo_red_light"
+        android:text="Friends by Interest"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="319dp"
+        android:layout_above="@+id/buttonEvent"
+        android:layout_alignEnd="@+id/buttonEvent"
+        android:layout_marginBottom="62dp" />
+
+    <Button
+        android:id="@+id/buttonEvent"
+        android:layout_width="323dp"
+        android:layout_height="74dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Friends By Event"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="101dp"
+        android:layout_marginBottom="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonEditProfile"
+        android:layout_width="139dp"
+        android:layout_height="56dp"
+        android:onClick="editProfile"
+        android:text="Edit Profile"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="7dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="13dp" />
+
+</RelativeLayout>

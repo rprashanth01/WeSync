@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="prashanth.wesync.EditProfileActivity">
+
+    <EditText
+        android:id="@+id/phoneET"
+        android:layout_width="267dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="27dp"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="106dp"
+        android:layout_above="@+id/interestsTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="29dp"
+        android:layout_alignEnd="@+id/buttonSubmitEP" />
+
+    <EditText
+        android:id="@+id/nameET"
+        android:layout_width="267dp"
+        android:layout_height="44dp"
+        android:layout_above="@+id/phoneET"
+        android:layout_alignStart="@+id/phoneET"
+        android:layout_marginBottom="21dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="37dp"
+        android:layout_alignEnd="@+id/buttonSubmitEP" />
+
+    <CheckBox
+        android:id="@+id/checkMusic"
+        android:layout_width="147dp"
+        android:layout_height="38dp"
+        android:text="Music"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="289dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/interestsTV"
+        android:layout_marginBottom="25dp" />
+
+    <CheckBox
+        android:id="@+id/checkDance"
+        android:layout_width="147dp"
+        android:layout_height="38dp"
+        android:text="Dance"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="337dp"
+        android:layout_above="@+id/checkMusic"
+        android:layout_alignStart="@+id/checkSports"
+        android:layout_marginBottom="22dp" />
+
+    <CheckBox
+        android:id="@+id/checkSports"
+        android:layout_width="147dp"
+        android:layout_height="38dp"
+        android:text="Sports"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="393dp"
+        android:layout_above="@+id/checkDance"
+        android:layout_alignStart="@+id/checkDate"
+        android:layout_marginBottom="18dp" />
+
+    <CheckBox
+        android:id="@+id/checkDate"
+        android:layout_width="147dp"
+        android:layout_height="38dp"
+        android:text="Dating"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="447dp"
+        android:layout_above="@+id/checkSports"
+        android:layout_alignStart="@+id/checkMovies"
+        android:layout_marginBottom="20dp" />
+
+    <CheckBox
+        android:id="@+id/checkMovies"
+        android:layout_width="147dp"
+        android:layout_height="38dp"
+        android:text="Movies"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="239dp"
+        android:layout_above="@+id/checkDate"
+        android:layout_alignStart="@+id/interestsTV"
+        android:layout_marginBottom="17dp" />
+
+    <TextView
+        android:id="@+id/interestsTV"
+        android:layout_width="198dp"
+        android:layout_height="37dp"
+        android:text="Interests"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="178dp"
+        android:layout_above="@+id/checkMovies"
+        android:layout_alignStart="@+id/phoneET"
+        android:layout_marginBottom="26dp" />
+
+    <Button
+        android:id="@+id/buttonSubmitEP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:onClick="storeProfileData"
+        android:text="Done!"
+        tools:layout_editor_absoluteX="276dp"
+        tools:layout_editor_absoluteY="455dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
+</RelativeLayout>
