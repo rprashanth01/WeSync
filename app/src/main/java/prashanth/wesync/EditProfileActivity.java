@@ -18,9 +18,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private String name = "";
     private String phone = "";
-    private View view;
     private ArrayList<String> interests = new ArrayList<String>();
-    boolean checked;
+
+    String userId = "hansolo@gmailcom1234";
 
     private DatabaseReference mDatabase;
 
@@ -38,7 +38,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        view = findViewById(android.R.id.content);
         nameET = (EditText)findViewById(R.id.nameET);
 
         phoneET = (EditText)findViewById(R.id.phoneET);
@@ -52,7 +51,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-    void storeProfileData(View view){
+    public void storeProfileData(View view){
 
         name = nameET.getText().toString();
         phone = phoneET.getText().toString();
@@ -76,7 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        String userId = mDatabase.push().getKey();
+        //String userId = mDatabase.push().getKey();
         UserInfo user = new UserInfo(name,"abc@gmail.com",phone,12345,34567,interests);
         mDatabase.child(userId).setValue(user);
 

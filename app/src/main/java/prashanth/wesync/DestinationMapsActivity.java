@@ -60,6 +60,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
 
+
         }
 
     }
