@@ -120,12 +120,8 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
-                        requestPermissionsSMS();
-                    }
-
                 } else {
-                    Toast.makeText(this,"SMS Permission required for app to run", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Location Permission required for app to run", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -148,16 +144,6 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
-    private void requestPermissionsSMS() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.SEND_SMS},
-                    PERMISSION_SEND_SMS);
-
-        }
-
-    }
 
 
 
