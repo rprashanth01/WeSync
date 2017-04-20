@@ -1,5 +1,6 @@
 package prashanth.wesync;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +30,7 @@ import prashanth.wesync.models.UserInfo;
 
 import static prashanth.wesync.AppConstants.PERMISSION_READ_CONTACTS;
 import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
+import static prashanth.wesync.AppConstants.PERMISSION_SEND_SMS;
 
 public class MenuActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -109,7 +111,21 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
                     }
 
                 } else {
-                    Toast.makeText(this,"Permission required for app to run", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Read Contacts Permission required for app to run", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+            case PERMISSION_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+                        requestPermissionsSMS();
+                    }
+
+                } else {
+                    Toast.makeText(this,"SMS Permission required for app to run", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -131,6 +147,18 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
     }
+
+    private void requestPermissionsSMS() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.SEND_SMS},
+                    PERMISSION_SEND_SMS);
+
+        }
+
+    }
+
 
 
     protected void onStart() {

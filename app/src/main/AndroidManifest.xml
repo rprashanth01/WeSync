@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -46,7 +49,10 @@
         <activity
             android:name=".DestinationMapsActivity"
             android:label="@string/title_activity_location_maps" />
-        <activity android:name=".UsersListActivity"></activity>
+        <activity android:name=".UsersListActivity" />
+        <activity android:name=".SendMessageActivity" />
+        <activity android:name=".SendSMSActivity" />
+        <activity android:name=".SendEmailActivity"></activity>
     </application>
 
 </manifest>

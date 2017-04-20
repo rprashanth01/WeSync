@@ -1,12 +1,12 @@
 package prashanth.wesync;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by asbhat3 on 4/19/2017.
@@ -20,7 +20,7 @@ public class CustomContactAdapter extends BaseAdapter{
     Context context;
 
     private static LayoutInflater inflater=null;
-    public CustomContactAdapter(UsersListActivity usersListActivity, String[] userNames, String[] userPhone, String[] userEmail) {
+    public CustomContactAdapter(UsersListActivity usersListActivity, String[] userNames, String[] userEmail,String[] userPhone) {
         // TODO Auto-generated constructor stub
         userNamesLocal =userNames;
         userPhoneLocal = userPhone;
@@ -71,7 +71,13 @@ public class CustomContactAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+userNamesLocal[position], Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "You Clicked "+userNamesLocal[position], Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(context, SendMessageActivity.class);
+                intent.putExtra("email", userEmailLocal[position]);
+                intent.putExtra("phone", userPhoneLocal[position]);
+                context.startActivity(intent);
+
             }
         });
         return rowView;
