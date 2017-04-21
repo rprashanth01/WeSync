@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.services.admin.directory.DirectoryScopes;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
-                .requestScopes(new Scope(CalendarScopes.CALENDAR_READONLY))
+                .requestScopes(new Scope(CalendarScopes.CALENDAR_READONLY),new Scope(DirectoryScopes.ADMIN_DIRECTORY_GROUP))
                 .requestServerAuthCode(serverClientId, false)
                 .build();
 

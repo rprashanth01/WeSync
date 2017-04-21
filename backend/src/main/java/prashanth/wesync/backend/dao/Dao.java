@@ -1,5 +1,7 @@
 package prashanth.wesync.backend.dao;
 
+import com.google.appengine.repackaged.com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public enum Dao {
         }
     }
 
-    public void createEvent(String eventName, String user, String location){
+    public JsonObject createEvent(String eventName, String user, String location){
         EntityManager em = EMFService.get().createEntityManager();
         Query q = em
                 .createQuery("select t from Event t where t.eventName = :eventName");
@@ -42,8 +44,11 @@ public enum Dao {
             for( Event ql : queryList) {
                 if(ql != null && ql.getEventName().equals(eventName)) {
                     Event e = (Event) queryList.get(0);
-                    e.setUsers(user);
-                    em.persist(e);
+                    List<String> users = e.getUsers();
+                    if(!users.contains(user)) {
+                        e.setUsers(user);
+                        em.persist(e);
+                    }
                 }
             }
 
@@ -54,6 +59,30 @@ public enum Dao {
             em.persist(e);
 
         }
+        JsonObject res = retriveUserEvent(user);
         em.close();
+        return res;
+    }
+
+    public JsonObject retriveUserEvent(String user){
+        JsonObject res = new JsonObject();
+        EntityManager em = EMFService.get().createEntityManager();
+        Query q = em
+                .createQuery("select t from Event t");
+        List<Event> queryList  = q.getResultList();
+
+        if(queryList.size()  > 0 ) {
+            for (Event ql : queryList) {
+                List<String> users = ql.getUsers();
+                if (users.contains(user)) {
+                    res.addProperty(ql.getEventName(), users.toString());
+                }
+            }
+        } else {
+            res.addProperty("Event","none found");
+        }
+
+        return res;
+
     }
 }

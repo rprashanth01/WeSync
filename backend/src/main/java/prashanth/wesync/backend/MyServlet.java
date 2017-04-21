@@ -13,9 +13,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.appengine.repackaged.com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,6 +71,8 @@ public class MyServlet extends HttpServlet {
         GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
         Calendar cal = new Calendar.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
                 .setApplicationName("WeSync").build();
+        Directory dir = new Directory.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
+                .setApplicationName("WeSync").build();
         Events events = cal.events().list("primary")
                 .setMaxResults(10)
                 .setTimeMin(new DateTime(System.currentTimeMillis()))
@@ -80,7 +84,8 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("No events");
         } else {
             for(Event item : items){
-                Dao.INSTANCE.createEvent(item.getSummary(),email,item.getLocation());
+                JsonObject res = Dao.INSTANCE.createEvent(item.getSummary(),email,item.getLocation());
+                resp.getWriter().write(res.toString());
             }
             resp.getWriter().println(items.get(0).getCreator());
         }
