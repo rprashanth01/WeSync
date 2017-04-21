@@ -84,9 +84,13 @@ public class InterestsMapsActivity extends FragmentActivity implements OnMapRead
                             boolean isWithin10km = distanceInMeters < 10000;
                             if (isWithin10km) {
                                 LatLng latLngFriends = new LatLng(user.getLatitude(), user.getLongitude());
-                                mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName()+" Interests: "+interest));
+                                mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName()+" Interests: "+interest)).showInfoWindow();
                                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLngFriends));
-                                CameraUpdateFactory.newLatLngZoom(latLngFriends, 17);
+                                //CameraUpdateFactory.newLatLngZoom(latLngFriends, 11);
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngFriends));
+                                mMap.animateCamera( CameraUpdateFactory.zoomTo(11.0f ) );
+                                //mMap.animateCamera( CameraUpdateFactory.zoomTo(11.0f ) );
+
                             }
 
                         }

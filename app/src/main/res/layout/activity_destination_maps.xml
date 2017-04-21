@@ -41,12 +41,28 @@
 
     -->
 
-
+  <LinearLayout
+      android:layout_width="380dp"
+      android:layout_height="476dp">
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="380dp"
-        android:layout_height="516dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:context="prashanth.wesync.DestinationMapsActivity" />
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/getDirections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:onClick="getDirections"
+            android:text="Get Directions" />
+
+    </LinearLayout>
 </LinearLayout>
 

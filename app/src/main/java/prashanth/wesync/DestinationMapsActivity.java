@@ -1,9 +1,11 @@
 package prashanth.wesync;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,6 +58,8 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
     GoogleApiClient mGoogleApiClient;
     Marker mCurrLocation;
     LocationRequest mLocationRequest;
+    public double destLatitude ;
+    public double destLongitude;
 
     ArrayList<UserInfo> dbUsersFromPhone = new ArrayList<>();
     ArrayList<ContactList> UsersFromPhone;
@@ -101,6 +105,10 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
             mMap.addMarker(new MarkerOptions().position(latLng).title("Destination")).showInfoWindow();
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             CameraUpdateFactory.newLatLngZoom(latLng, 17);
+
+            destLatitude = address.getLatitude();
+            destLongitude = address.getLongitude();
+
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
             ref.addValueEventListener(new ValueEventListener() {
@@ -158,6 +166,13 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
                 }
             }
         }
+    }
+
+    public void getDirections(View v){
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+address.getLatitude()+","+address.getLongitude());
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
     }
 
     @Override
