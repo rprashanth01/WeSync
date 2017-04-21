@@ -7,12 +7,18 @@
 package prashanth.wesync.backend;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +66,30 @@ public class MyServlet extends HttpServlet {
 
         Dao.INSTANCE.createUser(name,"sdf",email,accessToken,refreshToken);
         resp.setContentType("text/plain");
-        resp.getWriter().println("Hello " + email);
+        GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
+        Calendar cal = new Calendar.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
+                .setApplicationName("WeSync").build();
+        Events events = cal.events().list("primary")
+                .setMaxResults(10)
+                .setTimeMin(new DateTime(System.currentTimeMillis()))
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+        List<Event> items = events.getItems();
+        if (items.size() == 0) {
+            resp.getWriter().println("No events");
+        } else {
+            for(Event item : items){
+                Dao.INSTANCE.createEvent(item.getId(),email,item.getLocation());
+            }
+            resp.getWriter().println(items.get(0).getCreator());
+        }
+
+//        Channel channel = new Channel();
+//        channel.setId(UUID.randomUUID().toString());
+//        channel.setType("web_hook");
+//        channel.setAddress("https://wesync-164907.appspot.com/notification");
+//        Channel c = cal.events().watch("primary",channel).execute();
+
     }
 }
