@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="prashanth.wesync.MenuActivity">
 
+    <ImageView
+        android:id="@+id/splashImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/we" />
+
     <Button
         android:id="@+id/buttonDest"
         android:layout_width="323dp"
@@ -13,7 +20,7 @@
         android:layout_alignStart="@+id/buttonInterest"
         android:layout_below="@+id/buttonEditProfile"
         android:layout_marginTop="46dp"
-        android:background="@android:color/holo_green_light"
+        android:background="@color/colorAccent"
         android:onClick="findFriendsByDest"
         android:text="Friends by Destination"
         tools:layout_editor_absoluteX="31dp"
@@ -25,7 +32,7 @@
         android:layout_height="74dp"
         android:layout_alignStart="@+id/buttonEvent"
         android:layout_centerVertical="true"
-        android:background="@android:color/holo_red_light"
+        android:background="@color/colorPrimary"
         android:onClick="findFriendsByInterest"
         android:text="Friends by Interest"
         tools:layout_editor_absoluteX="31dp"
@@ -43,26 +50,32 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+
     <Button
         android:id="@+id/buttonEditProfile"
         android:layout_width="139dp"
         android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimaryDark"
         android:onClick="editProfile"
         android:text="Edit Profile"
         tools:layout_editor_absoluteX="247dp"
-        tools:layout_editor_absoluteY="7dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="13dp" />
+        tools:layout_editor_absoluteY="7dp" />
 
     <Button
         android:id="@+id/buttonUsers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonDest"
-        android:layout_alignStart="@+id/buttonDest"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
         android:onClick="getAllUsers"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Load Users" />
+
+
+
 
     <Button
         android:id="@+id/buttonforum"
@@ -71,6 +84,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
         android:layout_toStartOf="@+id/buttonEditProfile"
+        android:background="@color/colorPrimaryDark"
         android:onClick="gotoForum"
         android:text="Forum" />
 

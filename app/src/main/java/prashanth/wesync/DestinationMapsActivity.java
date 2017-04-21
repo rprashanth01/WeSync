@@ -151,6 +151,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             return;
         }else{
             mMap.setMyLocationEnabled(true);
+
         }
 
     }
