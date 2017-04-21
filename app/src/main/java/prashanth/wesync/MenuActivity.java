@@ -106,6 +106,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
 
+    public void gotoForum(View view){
+
+        Intent intent = new Intent(MenuActivity.this, ForumActivity.class);
+        startActivity(intent);
+    }
 
 
 
