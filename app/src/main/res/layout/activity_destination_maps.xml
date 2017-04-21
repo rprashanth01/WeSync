@@ -26,7 +26,7 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -39,14 +39,14 @@
 
     </LinearLayout>
 
-    -->
+
 
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="380dp"
-        android:layout_height="516dp"
+        android:layout_height="496dp"
         tools:context="prashanth.wesync.DestinationMapsActivity" />
 </LinearLayout>
 

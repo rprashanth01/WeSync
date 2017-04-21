@@ -8,13 +8,13 @@ import java.util.List;
 
 public class EventList {
 
-    List<Event> events;
+    List<Event> event;
 
     public List<Event> getEvents() {
-        return events;
+        return event;
     }
 
     public void setEvents(List<Event> events) {
-        this.events = events;
+        this.event = events;
     }
 }

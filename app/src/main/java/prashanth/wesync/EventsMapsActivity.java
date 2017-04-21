@@ -3,9 +3,12 @@ package prashanth.wesync;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import prashanth.wesync.models.ContactList;
 import prashanth.wesync.models.UserInfo;
@@ -31,6 +35,7 @@ public class EventsMapsActivity extends FragmentActivity implements OnMapReadyCa
 
     ArrayList<String> phoneNo = new ArrayList<>();
     ArrayList<String> emailIds = new ArrayList<>();
+    ArrayList<String> emailEmailList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,11 @@ public class EventsMapsActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         eventEmails = getIntent().getStringExtra("eventEmails");
+        eventEmails = eventEmails.replaceAll("\\[","");
+        eventEmails = eventEmails.replaceAll("\\]","");
+        eventEmails = eventEmails.replaceAll(" ","");
+        String[] emailList = eventEmails.split(",");
+        emailEmailList = new ArrayList<String>(Arrays.asList(emailList));
         eventName = getIntent().getStringExtra("eventName");
     }
 
@@ -64,20 +74,19 @@ public class EventsMapsActivity extends FragmentActivity implements OnMapReadyCa
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
         //userLocal = ((GlobalClass) this.getApplication()).getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot topSnapshot) {
 
                 for (DataSnapshot snapshot : topSnapshot.getChildren()) {
                     UserInfo user = snapshot.getValue(UserInfo.class);
-                    phoneNo.add(user.getPhoneNumber());
-                    emailIds.add(user.getEmail());
-                    userList.add(user);
+                    if(emailEmailList.contains(user.getEmail())){
+                        LatLng event = new LatLng(user.getLatitude(), user.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(event).title(user.getName()+": "+eventName));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(event));
+                    }
                 }
-     
-
-
             }
 
 
