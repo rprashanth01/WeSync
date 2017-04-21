@@ -78,11 +78,13 @@ public class EditProfileActivity extends AppCompatActivity {
         //UserInfo user = new UserInfo(name,"abc@gmail.com",phone,12345,34567,interests);
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users/"+userId);
         DatabaseReference nameRef = usersRef.child("name");
+        DatabaseReference emailRef = usersRef.child("email");
         DatabaseReference interestsRef = usersRef.child("interests");
         DatabaseReference phoneRef = usersRef.child("phoneNumber");
         nameRef.setValue(name);
         interestsRef.setValue(interests);
         phoneRef.setValue(phone);
+        emailRef.setValue(((GlobalClass) this.getApplication()).getCurrentUser().getEmail());
 
 
         Intent intent = new Intent(EditProfileActivity.this, MenuActivity.class);

@@ -86,9 +86,12 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userGlobal = dataSnapshot.getValue(UserInfo.class);
-                userGlobal.setEmail(getIntent().getStringExtra("email"));
-                DatabaseReference emailRef = userRef.child("email");
-                emailRef.setValue(getIntent().getStringExtra("email"));
+                if(userGlobal.getEmail() == null || (userGlobal.getEmail().equals(""))){
+                    userGlobal.setEmail(getIntent().getStringExtra("email"));
+                    DatabaseReference emailRef = userRef.child("email");
+                    emailRef.setValue(getIntent().getStringExtra("email"));
+                }
+
                 ((GlobalClass) MenuActivity.this.getApplication()).setCurrentUser(userGlobal);
 
             }
