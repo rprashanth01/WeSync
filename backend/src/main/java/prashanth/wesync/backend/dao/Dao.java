@@ -1,5 +1,6 @@
 package prashanth.wesync.backend.dao;
 
+import com.google.appengine.repackaged.com.google.gson.JsonArray;
 import com.google.appengine.repackaged.com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -65,24 +66,31 @@ public enum Dao {
     }
 
     public JsonObject retriveUserEvent(String user){
-        JsonObject res = new JsonObject();
+        JsonObject fin = new JsonObject();
+        JsonArray res = new JsonArray();
         EntityManager em = EMFService.get().createEntityManager();
         Query q = em
                 .createQuery("select t from Event t");
         List<Event> queryList  = q.getResultList();
 
         if(queryList.size()  > 0 ) {
+            //List<JsonObject> inner = new JsonObject();
             for (Event ql : queryList) {
                 List<String> users = ql.getUsers();
+                JsonObject inner = new JsonObject();
                 if (users.contains(user)) {
-                    res.addProperty(ql.getEventName(), users.toString());
+                    inner.addProperty("eventName",ql.getEventName());
+                    inner.addProperty("emails", users.toString());
+                    res.add(inner);
                 }
+
             }
+            fin.add("event", res);
         } else {
-            res.addProperty("Event","none found");
+            fin.addProperty("event","none found");
         }
 
-        return res;
+        return fin;
 
     }
 }

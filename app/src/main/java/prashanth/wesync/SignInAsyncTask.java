@@ -54,6 +54,7 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
             int responseCode = connection.getResponseCode();
             StringBuilder response = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String jsonAnswer = connection.getHeaderField("event");
             String line;
             while ((line = reader.readLine()) != null) {
                 response.append(line);

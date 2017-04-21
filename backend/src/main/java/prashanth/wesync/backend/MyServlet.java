@@ -85,9 +85,8 @@ public class MyServlet extends HttpServlet {
         } else {
             for(Event item : items){
                 JsonObject res = Dao.INSTANCE.createEvent(item.getSummary(),email,item.getLocation());
-                resp.getWriter().write(res.toString());
+                resp.getWriter().println(res.toString());
             }
-            resp.getWriter().println(items.get(0).getCreator());
         }
 
 //        Channel channel = new Channel();
