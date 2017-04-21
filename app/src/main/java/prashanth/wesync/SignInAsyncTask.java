@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import prashanth.wesync.models.EventList;
 
 public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private Context context;
@@ -92,5 +96,9 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
     @Override
     protected void onPostExecute(String result) {
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Gson gson = new Gson();
+        EventList events = gson.fromJson(result, EventList.class);
+        ((GlobalClass) context.getApplicationContext()).setEventList(events);
+        EventList eventstest = ((GlobalClass) context.getApplicationContext()).getEventList();
     }
 }

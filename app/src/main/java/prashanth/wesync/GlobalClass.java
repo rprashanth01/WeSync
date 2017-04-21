@@ -5,6 +5,7 @@ import android.app.Application;
 import java.util.ArrayList;
 
 import prashanth.wesync.models.ContactList;
+import prashanth.wesync.models.EventList;
 import prashanth.wesync.models.UserInfo;
 
 /**
@@ -14,8 +15,17 @@ import prashanth.wesync.models.UserInfo;
 public class GlobalClass extends Application {
     private ArrayList<ContactList> contactList;
     private ArrayList<UserInfo> contactListDB;
-
     private UserInfo currentUser;
+    private EventList eventList;
+
+    public EventList getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(EventList eventList) {
+        this.eventList = eventList;
+    }
+
 
     public UserInfo getCurrentUser() {
         return currentUser;
