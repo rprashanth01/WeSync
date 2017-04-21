@@ -19,7 +19,7 @@ import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN_DELAY = 7000;
+    private static int SPLASH_SCREEN_DELAY = 3000;
     ArrayList<ContactList> contacts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
