@@ -1,6 +1,5 @@
 package prashanth.wesync;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,9 +27,7 @@ import java.util.Map;
 
 import prashanth.wesync.models.UserInfo;
 
-import static prashanth.wesync.AppConstants.PERMISSION_READ_CONTACTS;
 import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
-import static prashanth.wesync.AppConstants.PERMISSION_SEND_SMS;
 
 public class MenuActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -43,7 +40,7 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
     Context context;
     Location mLastLocation;
-    String userId = "hansolo@gmailcom1234";
+    String userId = "luke@gmailcom1234";
 
     private DatabaseReference mDatabase;
 
@@ -51,11 +48,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        requestAllPermissionsContact();
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
+        requestAllPermissionsLocation();
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -74,22 +71,12 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         ArrayList<String> interests = new ArrayList<>();
         interests.add("Movies");
         interests.add("Sports");
-        UserInfo user = new UserInfo("Asb","hansolo@gmail.com","4804101987",13.031405, 77.577156,interests);
+        UserInfo user = new UserInfo("Asb","luke@gmail.com","1234567890",57.999, 66.9008,interests);
         //mDatabase.setValue(user);
         mDatabase.child("users").child(userId).setValue(user);
 
     }
 
-    private void requestAllPermissionsContact() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.READ_CONTACTS},
-                    PERMISSION_READ_CONTACTS);
-
-        }
-
-    }
 
     /**
      *
@@ -101,20 +88,6 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case PERMISSION_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-                        requestAllPermissionsLocation();
-                    }
-
-                } else {
-                    Toast.makeText(this,"Read Contacts Permission required for app to run", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
             case PERMISSION_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -224,6 +197,26 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         /*userLocationUpdates.put(userId, new UserInfo(null, null, location.getLatitude(), location.getLongitude(),null));
         usersRef.updateChildren(userLocationUpdates);*/
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        /*float[] results = new float[1];
+        Location.distanceBetween(33.4236203, -111.9394405, 33.41913, -111.93444, results);
+        float distanceInMeters = results[0];
+        boolean isWithin10km = distanceInMeters < 10000;
+        if(isWithin10km){
+            Toast.makeText(this, "1. It is within 10 kms", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "1. It is not within 10 kms", Toast.LENGTH_SHORT).show();
+        }
+
+        Location.distanceBetween(33.4236203, -111.9394405, 13.031405, 77.577156, results);
+        distanceInMeters = results[0];
+        isWithin10km = distanceInMeters < 10000;
+        if(isWithin10km){
+            Toast.makeText(this, "2. It is within 10 kms", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "2. It is not within 10 kms", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override

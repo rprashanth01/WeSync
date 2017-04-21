@@ -61,6 +61,6 @@
         android:layout_above="@+id/buttonDest"
         android:layout_alignStart="@+id/buttonDest"
         android:onClick="getAllUsers"
-        android:text="Users" />
+        android:text="Load Users" />
 
 </RelativeLayout>

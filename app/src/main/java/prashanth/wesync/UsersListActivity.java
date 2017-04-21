@@ -34,6 +34,9 @@ public class UsersListActivity extends AppCompatActivity {
 
     ArrayList<ContactList> matchedUsers = new ArrayList<>();
 
+    ArrayList<UserInfo> matchedUsersDB = new ArrayList<>();
+
+
     ListView contactsListView;
     Context context;
 
@@ -56,11 +59,13 @@ public class UsersListActivity extends AppCompatActivity {
                 }
                 getContacts();
                 getMatchingContacts();
-
-
                 contactsListView=(ListView) findViewById(R.id.listViewContact);
                 contactsListView.setAdapter(new CustomContactAdapter(UsersListActivity.this, matchedUserNames.toArray(new String[matchedUserNames.size()]), matchedUserEmails.toArray(new String[matchedUserEmails.size()]), matchedUserPhones.toArray(new String[matchedUserPhones.size()])));
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                ((GlobalClass) UsersListActivity.this.getApplication()).setContactList(matchedUsers);
+                ((GlobalClass) UsersListActivity.this.getApplication()).setContactListDB(matchedUsersDB);
+                ArrayList<ContactList> test = ((GlobalClass) UsersListActivity.this.getApplication()).getContactList();
+                ArrayList<UserInfo> testDB = ((GlobalClass) UsersListActivity.this.getApplication()).getContactListDB();
             }
 
 
@@ -83,6 +88,7 @@ public class UsersListActivity extends AppCompatActivity {
                     matchedUserNames.add(contact.getContactName());
                     matchedUserEmails.add(contact.getEmail());
                     matchedUserPhones.add(contact.getContactNo());
+                    matchedUsersDB.add(userList.get(phoneNo.indexOf(contact.getContactNo())));
                 }
             }else if(emailIds.contains(contact.getEmail())){
                 if(!matchedUserNames.contains(contact.getContactName())){
@@ -90,6 +96,8 @@ public class UsersListActivity extends AppCompatActivity {
                     matchedUserNames.add(contact.getContactName());
                     matchedUserEmails.add(contact.getEmail());
                     matchedUserPhones.add(contact.getContactNo());
+                    matchedUsersDB.add(userList.get(emailIds.indexOf(contact.getEmail())));
+
                 }
             }
         }
