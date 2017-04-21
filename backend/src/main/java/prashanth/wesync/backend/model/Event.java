@@ -14,7 +14,7 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Event( String eventName, List<String> users, String locations) {
+    public Event(String eventName, List<String> users, String locations) {
         this.eventName = eventName;
         this.users = users;
         this.locations = locations;
