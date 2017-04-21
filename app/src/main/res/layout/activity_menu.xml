@@ -64,4 +64,14 @@
         android:onClick="getAllUsers"
         android:text="Load Users" />
 
+    <Button
+        android:id="@+id/buttonforum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_toStartOf="@+id/buttonEditProfile"
+        android:onClick="gotoForum"
+        android:text="Forum" />
+
 </RelativeLayout>

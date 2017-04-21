@@ -12,15 +12,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import prashanth.wesync.models.UserInfo;
-
 public class EditProfileActivity extends AppCompatActivity {
 
     private String name = "";
     private String phone = "";
     private ArrayList<String> interests = new ArrayList<String>();
 
-    String userId = "hansolo@gmailcom1234";
+    String userId;
 
     private DatabaseReference mDatabase;
 
@@ -48,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
         sportsCB = (CheckBox)findViewById(R.id.checkSports);
         dateCB = (CheckBox)findViewById(R.id.checkDate);
 
+        userId = ((GlobalClass) this.getApplication()).getCurrentUser().getEmail().replaceAll("\\.","");
 
     }
 
@@ -76,11 +75,19 @@ public class EditProfileActivity extends AppCompatActivity {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
         //String userId = mDatabase.push().getKey();
-        UserInfo user = new UserInfo(name,"abc@gmail.com",phone,12345,34567,interests);
-        mDatabase.child(userId).setValue(user);
+        //UserInfo user = new UserInfo(name,"abc@gmail.com",phone,12345,34567,interests);
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users/"+userId);
+        DatabaseReference nameRef = usersRef.child("name");
+        DatabaseReference emailRef = usersRef.child("email");
+        DatabaseReference interestsRef = usersRef.child("interests");
+        DatabaseReference phoneRef = usersRef.child("phoneNumber");
+        nameRef.setValue(name);
+        interestsRef.setValue(interests);
+        phoneRef.setValue(phone);
+        emailRef.setValue(((GlobalClass) this.getApplication()).getCurrentUser().getEmail());
 
 
-        Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(EditProfileActivity.this, MenuActivity.class);
         startActivity(intent);
     }
 }
