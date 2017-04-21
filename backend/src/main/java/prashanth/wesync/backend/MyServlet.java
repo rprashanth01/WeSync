@@ -80,7 +80,7 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("No events");
         } else {
             for(Event item : items){
-                Dao.INSTANCE.createEvent(item.getId(),email,item.getLocation());
+                Dao.INSTANCE.createEvent(item.getSummary(),email,item.getLocation());
             }
             resp.getWriter().println(items.get(0).getCreator());
         }

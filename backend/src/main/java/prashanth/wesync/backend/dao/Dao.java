@@ -17,40 +17,43 @@ public enum Dao {
             EntityManager em = null;
             try {
                 em = EMFService.get().createEntityManager();
-                User user = new User(fname, lname, email, accessToken, refreshToken);
-                em.persist(user);
+                Query q = em
+                        .createQuery("select t from User t where t.email= :email");
+                q.setParameter("email",email);
+                List<Event> queryList  = q.getResultList();
+                if( queryList.size() <=0 ) {
+                    User user = new User(fname, lname, email, accessToken, refreshToken);
+                    em.persist(user);
+                }
             } finally {
                 em.close();
             }
         }
     }
 
-    public void createEvent(String event, String user, String location){
+    public void createEvent(String eventName, String user, String location){
         EntityManager em = EMFService.get().createEntityManager();
         Query q = em
-                .createQuery("select t from Event t");
+                .createQuery("select t from Event t where t.eventName = :eventName");
+        q.setParameter("eventName",eventName);
         List<Event> queryList  = q.getResultList();
-        boolean write = false ;
-        if(queryList.size() > 0 ){
+
+        if(queryList.size()  > 0 ){
             for( Event ql : queryList) {
-                if(ql != null && ql.getEventName().equals(event)) {
+                if(ql != null && ql.getEventName().equals(eventName)) {
                     Event e = (Event) queryList.get(0);
                     e.setUsers(user);
-                } else {
-                    List l = new ArrayList<String>();
-                    l.add(user);
-                    Event e = new Event(event, l,location);
                     em.persist(e);
-                    write = true;
                 }
             }
 
         } else {
             List l = new ArrayList<String>();
             l.add(user);
-            Event e = new Event(event, l,location);
+            Event e = new Event(eventName, l,location);
             em.persist(e);
-            write = true;
+
         }
+        em.close();
     }
 }
