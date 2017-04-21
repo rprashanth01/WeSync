@@ -40,9 +40,12 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.google.android.gms:play-services-maps:9.4.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.google.apis:google-api-services-admin-directory:directory_v1-rev53-1.20.0'
+    compile 'com.google.code.gson:gson:2.3.1'
+    testCompile 'junit:junit:4.12'
 }
+
+
 
 
 

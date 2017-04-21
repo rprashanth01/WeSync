@@ -5,12 +5,16 @@ import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import prashanth.wesync.models.EventList;
 
 public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private Context context;
@@ -92,5 +98,11 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
     @Override
     protected void onPostExecute(String result) {
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Gson gson = new Gson();
+        JsonReader r = new JsonReader(new StringReader(result));
+        r.setLenient(true);
+        EventList events = gson.fromJson(r, EventList.class);
+        ((GlobalClass) context.getApplicationContext()).setEventList(events);
+        EventList eventstest = ((GlobalClass) context.getApplicationContext()).getEventList();
     }
 }

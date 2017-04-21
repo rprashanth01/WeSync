@@ -175,6 +175,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(destIntent);
     }
 
+    public void findFriendsByEvent(View v){
+        Intent eventIntent = new Intent(MenuActivity.this,EventsListActivity.class);
+        startActivity(eventIntent);
+    }
+
     public void findFriendsByInterest(View v){
         Intent interestIntent = new Intent(MenuActivity.this,InterestsMapsActivity.class);
         startActivity(interestIntent);
