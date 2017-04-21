@@ -5,16 +5,30 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +36,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,9 +49,14 @@ import prashanth.wesync.models.UserInfo;
 import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
 
 
-public class DestinationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class DestinationMapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
+    GoogleApiClient mGoogleApiClient;
+    Marker mCurrLocation;
+    LocationRequest mLocationRequest;
+
     ArrayList<UserInfo> dbUsersFromPhone = new ArrayList<>();
     ArrayList<ContactList> UsersFromPhone;
     Address address;
@@ -77,7 +98,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             }
             address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Destination")).showInfoWindow();
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             CameraUpdateFactory.newLatLngZoom(latLng, 17);
 
@@ -101,7 +122,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
                         boolean isWithin10km = distanceInMeters < 10000;
                         if(isWithin10km){
                             LatLng latLngFriends = new LatLng(user.getLatitude(), user.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName()));
+                            mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName())).showInfoWindow();
                         }
                     }
 
@@ -144,16 +165,46 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(-34, 151);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }else{
             mMap.setMyLocationEnabled(true);
+            buildGoogleApiClient();
+            mGoogleApiClient.connect();
+
+            /*
+            PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                    getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
+                    Log.d(this.getClass().getSimpleName(), "Place: " + place.getName());
+                }
+
+                @Override
+                public void onError(Status status) {
+
+                }
+
+            }); */
 
         }
 
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        //Toast.makeText(this, "buildGoogleApiClient", Toast.LENGTH_SHORT).show();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
 
@@ -183,5 +234,54 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             }
 
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        //Toast.makeText(this, "onConnected", Toast.LENGTH_SHORT).show();
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            //place marker at current position
+            mMap.clear();
+            LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title("You!!");
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+            mCurrLocation = mMap.addMarker(markerOptions);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera( CameraUpdateFactory.zoomTo(11.0f ) );
+            mCurrLocation.showInfoWindow();
+        }
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000); //5 seconds
+        mLocationRequest.setFastestInterval(10000); //3 seconds
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        //mLocationRequest.setSmallestDisplacement(0.1F); //1/10 meter
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
     }
 }
