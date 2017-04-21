@@ -3,6 +3,7 @@ package prashanth.wesync;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +19,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import prashanth.wesync.models.UserInfo;
 
 import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
 
@@ -59,6 +63,18 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
+
+            ArrayList<UserInfo> dbUsersFromPhone = ((GlobalClass) this.getApplication()).getContactListDB();
+            for(UserInfo user:dbUsersFromPhone){
+                float[] results = new float[1];
+                Location.distanceBetween(address.getLatitude(), address.getLongitude(), user.getLatitude(), user.getLongitude(), results);
+                float distanceInMeters = results[0];
+                boolean isWithin10km = distanceInMeters < 10000;
+                if(isWithin10km){
+                    LatLng latLngFriends = new LatLng(user.getLatitude(), user.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName()));
+                }
+            }
 
 
         }

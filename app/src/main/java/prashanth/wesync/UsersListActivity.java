@@ -65,7 +65,7 @@ public class UsersListActivity extends AppCompatActivity {
                 ((GlobalClass) UsersListActivity.this.getApplication()).setContactList(matchedUsers);
                 ((GlobalClass) UsersListActivity.this.getApplication()).setContactListDB(matchedUsersDB);
                 ArrayList<ContactList> test = ((GlobalClass) UsersListActivity.this.getApplication()).getContactList();
-                ArrayList<UserInfo> testDB = ((GlobalClass) UsersListActivity.this.getApplication()).getContactListDB();
+
             }
 
 

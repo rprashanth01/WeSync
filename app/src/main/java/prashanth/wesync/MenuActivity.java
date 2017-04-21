@@ -161,8 +161,8 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         // Create the location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10000)
-                .setFastestInterval(5000);
+                .setInterval(60000)
+                .setFastestInterval(60000);
         // Request location updates
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -196,27 +196,9 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         longRef.setValue(location.getLongitude());
         /*userLocationUpdates.put(userId, new UserInfo(null, null, location.getLatitude(), location.getLongitude(),null));
         usersRef.updateChildren(userLocationUpdates);*/
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
-        /*float[] results = new float[1];
-        Location.distanceBetween(33.4236203, -111.9394405, 33.41913, -111.93444, results);
-        float distanceInMeters = results[0];
-        boolean isWithin10km = distanceInMeters < 10000;
-        if(isWithin10km){
-            Toast.makeText(this, "1. It is within 10 kms", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "1. It is not within 10 kms", Toast.LENGTH_SHORT).show();
-        }
 
-        Location.distanceBetween(33.4236203, -111.9394405, 13.031405, 77.577156, results);
-        distanceInMeters = results[0];
-        isWithin10km = distanceInMeters < 10000;
-        if(isWithin10km){
-            Toast.makeText(this, "2. It is within 10 kms", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "2. It is not within 10 kms", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     @Override
