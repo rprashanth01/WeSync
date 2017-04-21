@@ -57,7 +57,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ForumActivity"></activity>
+        <activity android:name=".ForumActivity" />
+        <activity
+            android:name=".EventsMapsActivity"
+            android:label="@string/title_activity_events_maps" />
+        <activity android:name=".EventsListActivity"></activity>
     </application>
 
 </manifest>
