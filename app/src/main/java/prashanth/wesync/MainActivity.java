@@ -1,13 +1,9 @@
 package prashanth.wesync;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,11 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import prashanth.wesync.models.ContactList;
 
 import static prashanth.wesync.AppConstants.PERMISSION_READ_CONTACTS;
 
@@ -49,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    ArrayList<ContactList> contacts = new ArrayList<>();
+
+    String email = "namo@gmail.com";
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR_READONLY);
 
@@ -86,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                 .build();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
-        LocationBackgroundTask locationBackgroundTask = new LocationBackgroundTask();
-        locationBackgroundTask.execute();
+
     }
 
     @Override
@@ -183,16 +176,19 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
 
             if(result.isSuccess()){
                 GoogleSignInAccount account = result.getSignInAccount();
+                email = account.getEmail();
                 Toast.makeText(this, "SUCCESS!!",
                         Toast.LENGTH_LONG).show();
                 firebaseAuthWithGoogle(account);
                 Log.d("AUTH","signInAUth VAlue :  "+account.getServerAuthCode());
                 new SignInAsyncTask().execute(new Pair<Context, String>(this,account.getServerAuthCode() ));
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
             } else {
                 Log.d(TAG,"Google Login Failed");
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
             }
         }
@@ -207,68 +203,6 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                         Log.d("AUTH","signInWithCredential:oncomplete "+task.isSuccessful());
                     }
                 });
-    }
-
-    class LocationBackgroundTask extends AsyncTask<Void,Void,Void> {
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            {
-                ContentResolver contentResolver = getContentResolver();
-                Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-                while (cursor.moveToNext()) {
-
-                    String email = "";
-                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                    String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    Cursor dataCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID+" = ?",new String[]{ id },null);
-                    while(dataCursor.moveToNext()){
-                        ContactList contact = new ContactList();
-                        String phoneNumber = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                        phoneNumber = phoneNumber.replaceAll("[^0-9]", "");
-                        contact.setContactName(name);
-                        if(phoneNumber.length() > 10){
-                            contact.setContactNo(phoneNumber.substring(phoneNumber.length() - 10));
-                        }else{
-                            contact.setContactNo(phoneNumber);
-                        }
-                        contentResolver.query(
-                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                null,
-                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID
-                                        + " = ?", new String[] { id }, null);
-                        Cursor emails = contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
-
-                        while (emails.moveToNext()) {
-                            email = emails.getString(emails
-                                    .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                            break;
-                        }
-                        emails.close();
-                        contact.setEmail(email);
-                        contacts.add(contact);
-                        break;
-                    }
-                    dataCursor.close();
-
-                }
-                cursor.close();
-            }
-            ((GlobalClass) MainActivity.this.getApplication()).setContactList(contacts);
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
     }
 
 

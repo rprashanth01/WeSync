@@ -18,11 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -52,7 +48,17 @@
         <activity android:name=".UsersListActivity" />
         <activity android:name=".SendMessageActivity" />
         <activity android:name=".SendSMSActivity" />
-        <activity android:name=".SendEmailActivity"></activity>
+        <activity android:name=".SendEmailActivity" />
+        <activity
+            android:name=".InterestsMapsActivity"
+            android:label="@string/title_activity_interests_maps" />
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

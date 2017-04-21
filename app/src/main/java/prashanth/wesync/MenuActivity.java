@@ -18,8 +18,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +43,9 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
     Context context;
     Location mLastLocation;
-    String userId = "luke@gmailcom1234";
+    String userId = "";
+
+    UserInfo userGlobal;
 
     private DatabaseReference mDatabase;
 
@@ -51,6 +56,10 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        if(!(getIntent().getStringExtra("email").equals("")) && getIntent().getStringExtra("email") != null){
+            userId = getIntent().getStringExtra("email").replaceAll("\\.","");
+        }
 
         requestAllPermissionsLocation();
         if (mGoogleApiClient == null) {
@@ -71,9 +80,24 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         ArrayList<String> interests = new ArrayList<>();
         interests.add("Movies");
         interests.add("Sports");
-        UserInfo user = new UserInfo("Asb","luke@gmail.com","1234567890",57.999, 66.9008,interests);
+        UserInfo user = new UserInfo("Asb","luke@gmail.com","1234567890",33.4190996, -111.934596,interests);
+
         //mDatabase.setValue(user);
         mDatabase.child("users").child(userId).setValue(user);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users/"+userId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userGlobal = dataSnapshot.getValue(UserInfo.class);
+                ((GlobalClass) MenuActivity.this.getApplication()).setCurrentUser(userGlobal);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+
+            }
+        });
 
     }
 
@@ -177,6 +201,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     public void findFriendsByDest(View v){
         Intent destIntent = new Intent(MenuActivity.this,DestinationMapsActivity.class);
         startActivity(destIntent);
+    }
+
+    public void findFriendsByInterest(View v){
+        Intent interestIntent = new Intent(MenuActivity.this,InterestsMapsActivity.class);
+        startActivity(interestIntent);
     }
 
     public void getAllUsers(View v){

@@ -15,6 +15,16 @@ public class GlobalClass extends Application {
     private ArrayList<ContactList> contactList;
     private ArrayList<UserInfo> contactListDB;
 
+    private UserInfo currentUser;
+
+    public UserInfo getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserInfo currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public ArrayList<ContactList> getContactList() {
         return contactList;
     }

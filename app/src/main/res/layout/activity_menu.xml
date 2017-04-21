@@ -23,12 +23,13 @@
         android:id="@+id/buttonInterest"
         android:layout_width="323dp"
         android:layout_height="74dp"
+        android:layout_alignStart="@+id/buttonEvent"
+        android:layout_centerVertical="true"
         android:background="@android:color/holo_red_light"
+        android:onClick="findFriendsByInterest"
         android:text="Friends by Interest"
         tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="319dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/buttonEvent" />
+        tools:layout_editor_absoluteY="319dp" />
 
     <Button
         android:id="@+id/buttonEvent"

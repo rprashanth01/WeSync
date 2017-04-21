@@ -79,6 +79,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            CameraUpdateFactory.newLatLngZoom(latLng, 17);
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
             ref.addValueEventListener(new ValueEventListener() {
@@ -103,6 +104,7 @@ public class DestinationMapsActivity extends FragmentActivity implements OnMapRe
                             mMap.addMarker(new MarkerOptions().position(latLngFriends).title(user.getName()));
                         }
                     }
+
                 }
 
 
