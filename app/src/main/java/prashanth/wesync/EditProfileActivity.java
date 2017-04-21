@@ -84,7 +84,7 @@ public class EditProfileActivity extends AppCompatActivity {
         nameRef.setValue(name);
         interestsRef.setValue(interests);
         phoneRef.setValue(phone);
-        emailRef.setValue(((GlobalClass) this.getApplication()).getCurrentUser().getEmail());
+        //emailRef.setValue(((GlobalClass) this.getApplication()).getCurrentUser().getEmail());
 
 
         Intent intent = new Intent(EditProfileActivity.this, MenuActivity.class);

@@ -157,8 +157,8 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         // Create the location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(200000)
-                .setFastestInterval(200000);
+                .setInterval(10000)
+                .setFastestInterval(10000);
         // Request location updates
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
