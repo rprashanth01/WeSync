@@ -103,6 +103,6 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
         r.setLenient(true);
         EventList events = gson.fromJson(r, EventList.class);
         ((GlobalClass) context.getApplicationContext()).setEventList(events);
-        EventList eventstest = ((GlobalClass) context.getApplicationContext()).getEventList();
+        //EventList eventstest = ((GlobalClass) context.getApplicationContext()).getEventList();
     }
 }

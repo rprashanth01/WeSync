@@ -1,9 +1,11 @@
 package prashanth.wesync;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ public class EventsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_list);
 
-        ListView msgList = (ListView) findViewById(R.id.eventList);
+        final ListView eventListLv = (ListView) findViewById(R.id.eventList);
 
         final List<Event> eventLists;
         EventList eventList = ((GlobalClass) EventsListActivity.this.getApplication()).getEventList();
@@ -40,6 +42,18 @@ public class EventsListActivity extends AppCompatActivity {
                 return view;
             }
         };
-        msgList.setAdapter(adapter);
+        eventListLv.setAdapter(adapter);
+
+        eventListLv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
+            {
+                Event event = (Event) eventListLv.getItemAtPosition(position);
+                Intent intent = new Intent(EventsListActivity.this, EventsMapsActivity.class);
+                intent.putExtra("eventName",event.getEventName());
+                intent.putExtra("eventEmails",event.getEmails());
+                startActivity(intent);
+            }
+        });
     }
 }
