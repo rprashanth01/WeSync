@@ -1,7 +1,9 @@
 package prashanth.wesync;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -85,6 +87,7 @@ public class EventsMapsActivity extends FragmentActivity implements OnMapReadyCa
                         LatLng event = new LatLng(user.getLatitude(), user.getLongitude());
                         mMap.addMarker(new MarkerOptions().position(event).title(user.getName()+": "+eventName));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(event));
+                        mMap.animateCamera( CameraUpdateFactory.zoomTo(11.0f ) );
                     }
                 }
             }
@@ -97,5 +100,11 @@ public class EventsMapsActivity extends FragmentActivity implements OnMapReadyCa
         });
 
 
+    }
+
+    public void forumChat(View view){
+        Intent intent = new Intent(EventsMapsActivity.this, EventForumActivity.class);
+        intent.putExtra("eventName",eventName);
+        startActivity(intent);
     }
 }
