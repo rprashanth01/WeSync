@@ -61,7 +61,10 @@
         <activity
             android:name=".EventsMapsActivity"
             android:label="@string/title_activity_events_maps" />
-        <activity android:name=".EventsListActivity"></activity>
+        <activity android:name=".EventsListActivity" />
+        <activity
+            android:name=".models.EventMapsActivity"
+            android:label="@string/title_activity_event_maps"></activity>
     </application>
 
 </manifest>

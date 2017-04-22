@@ -187,7 +187,7 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
             mMap.setMyLocationEnabled(true);
             buildGoogleApiClient();
             mGoogleApiClient.connect();
-
+            /*
             PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                     getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -204,7 +204,7 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
 
                 }
 
-            });
+            });*/
 
         }
 

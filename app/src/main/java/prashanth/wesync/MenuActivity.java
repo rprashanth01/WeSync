@@ -190,6 +190,8 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(userIntent);
     }
 
+
+
     public void onLocationChanged(Location location) {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
