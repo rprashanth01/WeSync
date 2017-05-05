@@ -1,7 +1,6 @@
 package prashanth.wesync;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,7 +25,6 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
+        //findViewById(R.id.sign_out_button).setOnClickListener(this);
 
     }
 
@@ -239,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                 signIn();
                 break;
 
-            case R.id.sign_out_button:
-                signOut();
-                break;
+//            case R.id.sign_out_button:
+//                signOut();
+//                break;
         }
     }
 
@@ -258,9 +255,11 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
                         Toast.LENGTH_LONG).show();
                 firebaseAuthWithGoogle(account);
                 Log.d("AUTH","signInAUth VAlue :  "+account.getServerAuthCode());
-                new SignInAsyncTask().execute(new Pair<Context, String>(this,account.getServerAuthCode() ));
+                //new SignInAsyncTask(MainActivity.this).execute(new Pair<Context, String>(this,account.getServerAuthCode() ),
+                  //      new Pair<Context, String>(this,email));
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 intent.putExtra("email",email);
+                intent.putExtra("authCode",account.getServerAuthCode());
                 startActivity(intent);
             } else {
                 Log.d(TAG,"Google Login Failed");

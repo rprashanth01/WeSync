@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import prashanth.wesync.models.ContactList;
 
+import static prashanth.wesync.AppConstants.PERMISSION_READ_CONTACTS;
 import static prashanth.wesync.AppConstants.PERMISSION_REQUEST_LOCATION;
 
 /**
@@ -39,8 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void requestAllPermissionsLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSION_REQUEST_LOCATION);
@@ -64,7 +64,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                    requestAllPermissionsContact();
                 } else {
                     Toast.makeText(this,"Location Permission required for app to run", Toast.LENGTH_LONG).show();
                 }
@@ -73,6 +73,18 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         }
     }
+    private void requestAllPermissionsContact() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.READ_CONTACTS},
+                    PERMISSION_READ_CONTACTS);
+
+        }else{
+        }
+
+    }
+
 
 
 }

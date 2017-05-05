@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -59,6 +58,8 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
     public double destLatitude ;
     public double destLongitude;
 
+    public String destString;
+
     ArrayList<UserInfo> dbUsersFromPhone = new ArrayList<>();
     ArrayList<ContactList> UsersFromPhone;
     Address address;
@@ -87,8 +88,11 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
     public void onSearch(View view) {
 
 
-        EditText location_tf = (EditText) findViewById(R.id.TFaddress);
-        String location = location_tf.getText().toString();
+        //EditText location_tf = (EditText) findViewById(R.id.TFaddress);
+
+        //String location = location_tf.getText().toString();
+
+        String location = destString;
         List<Address> addressList = null;
         if (location != null || !location.equals("")) {
             Geocoder geocoder = new Geocoder(this);
@@ -187,7 +191,7 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
             mMap.setMyLocationEnabled(true);
             buildGoogleApiClient();
             mGoogleApiClient.connect();
-            /*
+
             PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                     getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -197,6 +201,8 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
                 public void onPlaceSelected(Place place) {
                     // TODO: Get info about the selected place.
                     Log.d(this.getClass().getSimpleName(), "Place: " + place.getName());
+                    destString = place.getName().toString();
+
                 }
 
                 @Override
@@ -204,7 +210,7 @@ public class DestinationMapsActivity extends FragmentActivity implements GoogleA
 
                 }
 
-            });*/
+            });
 
         }
 

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -50,6 +51,11 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        if(getIntent().hasExtra("authCode") && getIntent().hasExtra("email")){
+            new SignInAsyncTask(MenuActivity.this).execute(new Pair<Context, String>(this,getIntent().getStringExtra("authCode") ),
+                    new Pair<Context, String>(this,getIntent().getStringExtra("email")));
+        }
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -174,6 +180,45 @@ public class MenuActivity extends AppCompatActivity implements GoogleApiClient.C
         Intent destIntent = new Intent(MenuActivity.this,DestinationMapsActivity.class);
         startActivity(destIntent);
     }
+
+    public void syncData(View v){
+        if(getIntent().hasExtra("authCode") && getIntent().hasExtra("email")){
+            new SignInAsyncTask(MenuActivity.this).execute(new Pair<Context, String>(this,getIntent().getStringExtra("authCode") ),
+                    new Pair<Context, String>(this,getIntent().getStringExtra("email")));
+        }
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+        //userId = mDatabase.push().getKey();
+
+
+        // creating user object
+        ArrayList<String> interests = new ArrayList<>();
+
+        final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users/"+userId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userGlobal = dataSnapshot.getValue(UserInfo.class);
+                if(userGlobal.getEmail() == null || (userGlobal.getEmail().equals(""))){
+                    userGlobal.setEmail(getIntent().getStringExtra("email"));
+                    DatabaseReference emailRef = userRef.child("email");
+                    emailRef.setValue(getIntent().getStringExtra("email"));
+                }
+
+                ((GlobalClass) MenuActivity.this.getApplication()).setCurrentUser(userGlobal);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+
+            }
+        });
+    }
+
+
 
     public void findFriendsByEvent(View v){
         Intent eventIntent = new Intent(MenuActivity.this,EventsListActivity.class);

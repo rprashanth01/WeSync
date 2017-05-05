@@ -1,5 +1,7 @@
 package prashanth.wesync;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Pair;
@@ -29,10 +31,23 @@ import prashanth.wesync.models.EventList;
 public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private Context context;
 
+    private ProgressDialog dialog;
+
+    public SignInAsyncTask(Activity a){
+        dialog = new ProgressDialog(a);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        dialog.setMessage("Syncing data, please wait.");
+        dialog.show();
+    }
+
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         context = params[0].first;
         String name = params[0].second;
+        String email = params[1].second;
 
         try {
             // Set up the request
@@ -45,6 +60,7 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
             // Build name data request params
             Map<String, String> nameValuePairs = new HashMap<>();
             nameValuePairs.put("authCode", name);
+            nameValuePairs.put("email",email);
             String postParams = buildPostDataString(nameValuePairs);
 
             // Execute HTTP Post
@@ -104,5 +120,8 @@ public class SignInAsyncTask extends AsyncTask<Pair<Context, String>, Void, Stri
         EventList events = gson.fromJson(r, EventList.class);
         ((GlobalClass) context.getApplicationContext()).setEventList(events);
         //EventList eventstest = ((GlobalClass) context.getApplicationContext()).getEventList();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }

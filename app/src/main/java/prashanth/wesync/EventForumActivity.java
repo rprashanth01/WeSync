@@ -1,9 +1,11 @@
 package prashanth.wesync;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +54,9 @@ public class EventForumActivity extends AppCompatActivity {
 
             }
         });
+        msgText.setFocusable(true);
+        msgText.setFocusableInTouchMode(true);
+
 
 
         final List<MessageModel> messages = new LinkedList<>();
@@ -100,5 +105,19 @@ public class EventForumActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static void showKeyboard(Activity activity) {
+        if (activity != null) {
+            activity.getWindow()
+                    .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null) {
+            activity.getWindow()
+                    .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        }
     }
 }

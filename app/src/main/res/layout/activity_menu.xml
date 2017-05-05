@@ -82,11 +82,21 @@
         android:id="@+id/buttonforum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
-        android:layout_toStartOf="@+id/buttonEditProfile"
         android:background="@color/colorPrimaryDark"
         android:onClick="gotoForum"
-        android:text="Forum" />
+        android:text="Forum"
+        android:layout_alignBaseline="@+id/buttonsync"
+        android:layout_alignBottom="@+id/buttonsync"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/buttonsync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="syncData"
+        android:text="Sync" />
 
 </RelativeLayout>

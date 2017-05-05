@@ -5,39 +5,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="393dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <EditText
+        <!--<EditText
             android:layout_width="273dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/TFaddress"
-            android:hint="Location..." />
+            android:hint="Location..." /> -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout">
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+        </LinearLayout>
 
         <Button
             android:text="Search"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:id="@+id/searchBtn"
-            android:onClick="onSearch" />
+            android:onClick="onSearch"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
-
-    </LinearLayout>
 
 
 
@@ -46,7 +50,20 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="380dp"
-        android:layout_height="496dp"
+        android:layout_height="476dp"
         tools:context="prashanth.wesync.DestinationMapsActivity" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:text="Get Directions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/getDirectionsBtn"
+            android:onClick="getDirections" />
+    </LinearLayout>
+
+
 </LinearLayout>
 

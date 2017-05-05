@@ -4,6 +4,16 @@
     <version>1</version>
     <threadsafe>true</threadsafe>
 
+    <automatic-scaling>
+        <min-idle-instances>2</min-idle-instances>
+        <!-- ‘automatic’ is the default value. -->
+        <max-idle-instances>automatic</max-idle-instances>
+        <!-- ‘automatic’ is the default value. -->
+        <min-pending-latency>50ms</min-pending-latency>
+        <max-pending-latency>automatic</max-pending-latency>
+        <max-concurrent-requests>1</max-concurrent-requests>
+    </automatic-scaling>
+
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
     </system-properties>
